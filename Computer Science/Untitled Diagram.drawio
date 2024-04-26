@@ -1,0 +1,201 @@
+<mxfile host="app.diagrams.net" modified="2024-04-22T03:16:30.314Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36" etag="1_wwrPD5fOSuCG8PoBuh" version="24.2.5" type="device" pages="2">
+  <diagram id="Sxe_g1geZC6ka3LSSdbQ" name="Palindrom">
+    <mxGraphModel dx="1960" dy="422" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="TiJeA_Zr7pxfvfS97KD3-1" value="PSEUDOCODE&lt;br&gt;&lt;div&gt;Algoritma word_Palindrom&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;DECLARATION&lt;/div&gt;&lt;div&gt;word, i, reversed&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;BEGIN&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;INPUT word&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;lowercase word&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;i = length.word - 1&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;FOR i = length.word - 1 to 0&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;r&lt;/span&gt;eversed += word[i]&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;i = i - 1&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;END FOR&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;IF reversed === word THEN&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;OUTPUT word + &quot; adalah kata palindrom&quot;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;ELSE&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;OUTPUT word + &quot; bukan kata palindrom&quot;&lt;br&gt;&lt;/div&gt;&lt;div&gt;END&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=top;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="291.32" y="50" width="300" height="330" as="geometry" />
+        </mxCell>
+        <mxCell id="T-NwsO0NXuv6wamcc6Op-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="TiJeA_Zr7pxfvfS97KD3-3" target="TiJeA_Zr7pxfvfS97KD3-34" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TiJeA_Zr7pxfvfS97KD3-3" value="START" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="90" y="40" width="95" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="T-NwsO0NXuv6wamcc6Op-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="TiJeA_Zr7pxfvfS97KD3-5" target="TiJeA_Zr7pxfvfS97KD3-33" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TiJeA_Zr7pxfvfS97KD3-5" value="INPUT word" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" parent="1" vertex="1">
+          <mxGeometry x="87.1" y="190" width="102.5" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="TiJeA_Zr7pxfvfS97KD3-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="TiJeA_Zr7pxfvfS97KD3-9" target="TiJeA_Zr7pxfvfS97KD3-13" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TiJeA_Zr7pxfvfS97KD3-9" value="i = length.word - 1" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="85.63" y="340" width="105" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="TiJeA_Zr7pxfvfS97KD3-10" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="TiJeA_Zr7pxfvfS97KD3-13" target="TiJeA_Zr7pxfvfS97KD3-15" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TiJeA_Zr7pxfvfS97KD3-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="TiJeA_Zr7pxfvfS97KD3-13" target="TiJeA_Zr7pxfvfS97KD3-21" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TiJeA_Zr7pxfvfS97KD3-12" value="No" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="TiJeA_Zr7pxfvfS97KD3-11" vertex="1" connectable="0">
+          <mxGeometry x="-0.5835" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TiJeA_Zr7pxfvfS97KD3-13" value="i &amp;gt;= 0" style="rhombus;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="82.72" y="410" width="111.25" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="TiJeA_Zr7pxfvfS97KD3-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" parent="1" source="TiJeA_Zr7pxfvfS97KD3-15" target="TiJeA_Zr7pxfvfS97KD3-25" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TiJeA_Zr7pxfvfS97KD3-15" value="reversed += word[i]" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="85.63" y="550.01" width="105" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="TiJeA_Zr7pxfvfS97KD3-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="TiJeA_Zr7pxfvfS97KD3-17" target="TiJeA_Zr7pxfvfS97KD3-18" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TiJeA_Zr7pxfvfS97KD3-17" value="OUTPUT&lt;br&gt;word, &quot; adalah kata palindrom&quot;" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" parent="1" vertex="1">
+          <mxGeometry x="180" y="660.01" width="136.7" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="TiJeA_Zr7pxfvfS97KD3-18" value="END" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="296.7" y="750.01" width="95" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="TiJeA_Zr7pxfvfS97KD3-19" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="TiJeA_Zr7pxfvfS97KD3-21" target="TiJeA_Zr7pxfvfS97KD3-17" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="343" y="620.01" />
+              <mxPoint x="248" y="620.01" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TiJeA_Zr7pxfvfS97KD3-20" value="NO" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="TiJeA_Zr7pxfvfS97KD3-21" target="TiJeA_Zr7pxfvfS97KD3-23" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="343" y="620.01" />
+              <mxPoint x="441" y="620.01" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TiJeA_Zr7pxfvfS97KD3-21" value="reversed === word" style="rhombus;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="278.06" y="530.01" width="132.28" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="TiJeA_Zr7pxfvfS97KD3-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="TiJeA_Zr7pxfvfS97KD3-23" target="TiJeA_Zr7pxfvfS97KD3-18" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TiJeA_Zr7pxfvfS97KD3-23" value="OUTPUT&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;word, &quot; bukan kata palindrom&quot;" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" parent="1" vertex="1">
+          <mxGeometry x="375.94" y="660.01" width="130.76" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="TiJeA_Zr7pxfvfS97KD3-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="TiJeA_Zr7pxfvfS97KD3-25" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="80" y="450" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TiJeA_Zr7pxfvfS97KD3-25" value="i = i -1" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="-80" y="430" width="105" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="T-NwsO0NXuv6wamcc6Op-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="TiJeA_Zr7pxfvfS97KD3-33" target="TiJeA_Zr7pxfvfS97KD3-9" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TiJeA_Zr7pxfvfS97KD3-33" value="lowercase word" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="78.35" y="260" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="T-NwsO0NXuv6wamcc6Op-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="TiJeA_Zr7pxfvfS97KD3-34" target="TiJeA_Zr7pxfvfS97KD3-5" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TiJeA_Zr7pxfvfS97KD3-34" value="declaration word, i, reversed" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" parent="1" vertex="1">
+          <mxGeometry x="43.129999999999995" y="110" width="190" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="6r22YTzVMvbMxwFUQSTM" name="Membalik Kalimat">
+    <mxGraphModel dx="1615" dy="410" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="gtBB8rVGfn_sfL8cAo29-1" value="PSEUDOCODE&lt;br&gt;&lt;br&gt;&lt;div&gt;Algoritma Membalikan_Kalimat&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;DECLARATION&lt;/div&gt;&lt;div&gt;text, words, reversed, i&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;BEGIN&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;INPUT text&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;i = text.length - 1&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;WHILE i &amp;gt;= 0&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;IF text[i] != &quot; &quot; THEN&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;words = text[i] + words&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;ELSE&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;reversed = reversed + words + &quot; &quot;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;words = &quot;&quot;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;END IF&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;i&lt;/span&gt;&amp;nbsp;= i - 1&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;END WHILE&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;revesrsed = reversed + words&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;OUTPUT reversed&lt;br&gt;&lt;/div&gt;&lt;div&gt;END&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=top;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="280" y="20" width="270" height="360" as="geometry" />
+        </mxCell>
+        <mxCell id="gtBB8rVGfn_sfL8cAo29-32" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="gtBB8rVGfn_sfL8cAo29-3" target="gtBB8rVGfn_sfL8cAo29-29" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gtBB8rVGfn_sfL8cAo29-3" value="START" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="105.85" y="20" width="95" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="gtBB8rVGfn_sfL8cAo29-31" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="gtBB8rVGfn_sfL8cAo29-5" target="gtBB8rVGfn_sfL8cAo29-9" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gtBB8rVGfn_sfL8cAo29-5" value="INPUT text" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fontSize=11;" parent="1" vertex="1">
+          <mxGeometry x="102.1" y="190" width="102.5" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="gtBB8rVGfn_sfL8cAo29-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="gtBB8rVGfn_sfL8cAo29-9" target="gtBB8rVGfn_sfL8cAo29-12" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gtBB8rVGfn_sfL8cAo29-9" value="i = length.words - 1" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="73.78" y="300" width="159.15" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="gtBB8rVGfn_sfL8cAo29-10" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="gtBB8rVGfn_sfL8cAo29-12" target="gtBB8rVGfn_sfL8cAo29-15" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gtBB8rVGfn_sfL8cAo29-11" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="gtBB8rVGfn_sfL8cAo29-12" target="gtBB8rVGfn_sfL8cAo29-25" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gtBB8rVGfn_sfL8cAo29-12" value="i &amp;gt;= 0" style="rhombus;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="96.7" y="370" width="113.3" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="gtBB8rVGfn_sfL8cAo29-13" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="gtBB8rVGfn_sfL8cAo29-15" target="gtBB8rVGfn_sfL8cAo29-19" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gtBB8rVGfn_sfL8cAo29-14" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="gtBB8rVGfn_sfL8cAo29-15" target="gtBB8rVGfn_sfL8cAo29-17" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gtBB8rVGfn_sfL8cAo29-15" value="text[i] != &quot; &quot;" style="rhombus;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="96.7" y="485" width="113.3" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="gtBB8rVGfn_sfL8cAo29-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="gtBB8rVGfn_sfL8cAo29-17" target="gtBB8rVGfn_sfL8cAo29-21" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gtBB8rVGfn_sfL8cAo29-17" value="reversed = reversed + words +&lt;br&gt;&quot; &quot;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="100.85" y="600" width="105" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="gtBB8rVGfn_sfL8cAo29-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" parent="1" source="gtBB8rVGfn_sfL8cAo29-19" target="gtBB8rVGfn_sfL8cAo29-23" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-107" y="525" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="gtBB8rVGfn_sfL8cAo29-19" value="words = text[i] + words" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="-55" y="505" width="105" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="gtBB8rVGfn_sfL8cAo29-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="gtBB8rVGfn_sfL8cAo29-21" target="gtBB8rVGfn_sfL8cAo29-23" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gtBB8rVGfn_sfL8cAo29-21" value="words = &quot;&quot;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="100.85" y="670" width="105" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="gtBB8rVGfn_sfL8cAo29-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="gtBB8rVGfn_sfL8cAo29-23" target="gtBB8rVGfn_sfL8cAo29-12" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gtBB8rVGfn_sfL8cAo29-23" value="i = i - 1" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="-160" y="390" width="105" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="gtBB8rVGfn_sfL8cAo29-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="gtBB8rVGfn_sfL8cAo29-25" target="gtBB8rVGfn_sfL8cAo29-27" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gtBB8rVGfn_sfL8cAo29-25" value="reversed = reversed + words" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="290" y="390" width="105" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="gtBB8rVGfn_sfL8cAo29-26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="gtBB8rVGfn_sfL8cAo29-27" target="gtBB8rVGfn_sfL8cAo29-28" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gtBB8rVGfn_sfL8cAo29-27" value="OUTPUT reversed" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fontSize=11;" parent="1" vertex="1">
+          <mxGeometry x="277.5" y="505" width="130" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="gtBB8rVGfn_sfL8cAo29-28" value="END" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="470" y="500" width="95" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="gtBB8rVGfn_sfL8cAo29-33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="gtBB8rVGfn_sfL8cAo29-29" target="gtBB8rVGfn_sfL8cAo29-5" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gtBB8rVGfn_sfL8cAo29-29" value="declaration words, reversed, i" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" parent="1" vertex="1">
+          <mxGeometry x="93.35" y="100" width="120" height="50" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
