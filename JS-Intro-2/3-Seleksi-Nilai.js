@@ -1,11 +1,16 @@
 const seleksiNilai = (nilaiAwal, nilaiAkhir, dataArray) => {
+    if (typeof nilaiAwal !== 'number' || typeof nilaiAkhir !== 'number') {
+        return console.log("nilaiAwal dan nilaiAkhir harus berupa angka!")
+    }
+    if (!Array.isArray(dataArray)) {
+        return console.log("dataArray harus berupa array!")
+    }
     if (nilaiAwal > nilaiAkhir) {
         return console.log("Nilai akhir harus lebih besar dari nilai awal!")
     }
     if (dataArray.length <= 5) {
         return console.log("Jumlah angka dalam dataArray harus lebih dari 5")
     }
-
     const hasilSeleksi = []
     dataArray.forEach((nilai) => {
         if (nilai >= nilaiAwal && nilai <= nilaiAkhir) {
