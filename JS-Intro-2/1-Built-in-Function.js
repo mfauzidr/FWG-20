@@ -104,7 +104,7 @@ contoh kasus*/
 const fruits1 = ["apple", "banana", "cherry", "pineapple", "mango"]
 const slicedFruits = fruits1.slice(1, 4)
 
-// console.log(slicedFruits)
+console.log(slicedFruits)
 
 /*8. shift
 contoh kasus*/
