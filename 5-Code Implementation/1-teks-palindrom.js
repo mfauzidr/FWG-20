@@ -1,3 +1,5 @@
+
+
 const isPalindrome = (word) => {
     let reversed = ""
     const lower = word.toLowerCase()
@@ -15,3 +17,4 @@ const isPalindrome = (word) => {
 const inputWord = "Malam"
 
 console.log(isPalindrome(inputWord))
+

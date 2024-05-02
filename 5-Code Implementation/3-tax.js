@@ -1,3 +1,9 @@
+const hargaMakanan = 70000;
+const kodeVoucher = 'FAZZFOOD50';
+const jarakPengiriman = 5;
+const dikenakanPajak = true;
+const totalBiaya = FazzFood(hargaMakanan, kodeVoucher, jarakPengiriman, dikenakanPajak);
+
 const FazzFood = (harga, voucher, jarak, pajak) => {
     const hitungDiskon = (harga, voucher) => {
         if (voucher === 'FAZZFOOD50' && harga >= 50000) {
@@ -28,9 +34,5 @@ const FazzFood = (harga, voucher, jarak, pajak) => {
     return hitungTotalBiaya(harga, diskon, biayaPengiriman, pajak);
 };
 
-const hargaMakanan = 50000;
-const kodeVoucher = 'FAZZFOOD50';
-const jarakPengiriman = 4;
-const dikenakanPajak = true;
-const totalBiaya = FazzFood(hargaMakanan, kodeVoucher, jarakPengiriman, dikenakanPajak);
+
 console.log("Total Biaya: " + totalBiaya);
