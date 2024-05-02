@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2024-05-02T04:19:52.919Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36" etag="JuBn2vGaOf6P3oqCfLw0" version="24.3.1" type="github">
+<mxfile host="app.diagrams.net" modified="2024-05-02T04:39:42.006Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36" etag="x3Hb-NVsBEfI-RV1T0Qg" version="24.3.1" type="github" pages="2">
   <diagram name="Page-1" id="Uo2u7tEG_lrzLejc6Ttq">
-    <mxGraphModel dx="2836" dy="858" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="8267" dy="3147" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -168,6 +168,41 @@
         </mxCell>
         <mxCell id="35b_0dzXBRFAwwr3QzYx-63" value="minBiayaPengiriman + (jarak - 2) * 3000" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="326" y="458" width="174" height="79" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="nuC8Ax_H9xBdokMIt42s" name="Page-2">
+    <mxGraphModel dx="1120" dy="472" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="_o7Od1sVKJQ2oDsUsaq_-1" value="Start" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="42" y="36" width="107" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="zdehXh8jDcu0j8fo2TEM-1" value="Deklarasi variable result dan currentNum" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="1">
+          <mxGeometry x="26.25" y="122" width="138.5" height="72" as="geometry" />
+        </mxCell>
+        <mxCell id="zdehXh8jDcu0j8fo2TEM-3" value="Input" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="1">
+          <mxGeometry x="24.5" y="225" width="142" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="WLlgRnIR2XegNx-I-f0g-2" value="i = 0" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="37.5" y="419" width="116" height="57" as="geometry" />
+        </mxCell>
+        <mxCell id="WLlgRnIR2XegNx-I-f0g-3" value="i &amp;lt; numStr.length" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="21" y="499" width="149" height="85" as="geometry" />
+        </mxCell>
+        <mxCell id="WLlgRnIR2XegNx-I-f0g-4" value="numStr = input + &quot;&quot;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="37.5" y="323" width="116" height="57" as="geometry" />
+        </mxCell>
+        <mxCell id="WLlgRnIR2XegNx-I-f0g-5" value="char = numStr[i]" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="35.5" y="627" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="WLlgRnIR2XegNx-I-f0g-6" value="char === &quot;0&quot;" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="21" y="713" width="149" height="85" as="geometry" />
+        </mxCell>
+        <mxCell id="WLlgRnIR2XegNx-I-f0g-8" value="result += sortNumber(currentNum)" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" vertex="1" parent="1">
+          <mxGeometry x="10" y="818" width="181" height="100" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
