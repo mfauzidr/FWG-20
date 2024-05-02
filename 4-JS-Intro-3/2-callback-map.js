@@ -13,11 +13,10 @@ const getMonth = (callback) => {
 const showMonth = (error, data) => {
     if (error) {
         console.error(`Error: ${error.message}`)
-    } else {
-        data.map((month, index) => {
-            console.log(`Bulan ke-${index + 1}: ${month}`)
-        })
     }
+    data.map((month, index) => {
+        console.log(`Bulan ke-${index + 1}: ${month}`)
+    })
 };
 
 getMonth(showMonth);
