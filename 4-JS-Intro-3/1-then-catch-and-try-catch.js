@@ -24,7 +24,7 @@ cekHariKerja('senin')
     });
 //then disini jika kita berhasil menemukan hari kerja (contohnya "senin"), maka blok kode dalam then akan dijalankan yaitu mencetak pesan "Hari kerja: [hari]" di mana [hari] adalah hari yang ditemukan.
 
-//catch disini saat input kita adalah hari yang bukan hari kerja (misalnya "minggu"), maka blok kode dalam catch akan dijalankan yaitu mencetak pesan kesalahan yang memberitahu kita bahwa 'Hari ini bukan hari kerja'.
+//catch disini saat input kita adalah hari yang bukan hari kerja (misalnya "minggu"), maka blok kode dalam then tidak akan berjalan, melainkan catch, yang akan dijalankan untuk mencetak pesan kesalahan yang memberitahu kita bahwa 'Hari ini bukan hari kerja'.
 
 // try catch
 const checkHariKerja = async (day) => {

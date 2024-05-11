@@ -8,9 +8,9 @@ const inventoryList = {
 };
 
 // fungsi untuk menerima input dan return promise dengan value input user
-const userInput = async (promptMessage) => {
+const userInput = async (message) => {
   return new Promise((resolve) => {
-    console.log(promptMessage);
+    console.log(message);
     process.stdin.once('data', (input) => {
       const selection = input.toString().trim();
       resolve(selection);

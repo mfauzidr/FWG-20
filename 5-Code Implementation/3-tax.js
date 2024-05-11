@@ -1,8 +1,7 @@
-const hargaMakanan = 70000;
+const hargaMakanan = 75000;
 const kodeVoucher = 'FAZZFOOD50';
 const jarakPengiriman = 5;
 const dikenakanPajak = true;
-const totalBiaya = FazzFood(hargaMakanan, kodeVoucher, jarakPengiriman, dikenakanPajak);
 
 const FazzFood = (harga, voucher, jarak, pajak) => {
     const hitungDiskon = (harga, voucher) => {
@@ -23,7 +22,7 @@ const FazzFood = (harga, voucher, jarak, pajak) => {
 
     const hitungTotalBiaya = (harga, diskon, biayaPengiriman, pajak) => {
         if (pajak) {
-            harga += harga * 0.05;
+            harga = harga + (harga * 0.05) - diskon + biayaPengiriman;
         }
         return harga - diskon + biayaPengiriman;
     };
@@ -31,8 +30,25 @@ const FazzFood = (harga, voucher, jarak, pajak) => {
     const diskon = hitungDiskon(harga, voucher);
     const biayaPengiriman = hitungBiayaPengiriman(jarak);
 
-    return hitungTotalBiaya(harga, diskon, biayaPengiriman, pajak);
+    const totalBiaya = hitungTotalBiaya(harga, diskon, biayaPengiriman, pajak);
+    const pajakValue = pajak ? harga * 0.05 : 0;
+
+    return {
+        harga: harga,
+        diskon: diskon,
+        biayaPengiriman: biayaPengiriman,
+        pajak: pajakValue,
+        totalBiaya: totalBiaya
+    };
 };
 
+const cetakDetailPesanan = (detail) => {
+    console.log("Harga: " + detail.harga);
+    console.log("Diskon: " + detail.diskon);
+    console.log("Biaya Pengiriman: " + detail.biayaPengiriman);
+    console.log("Pajak: " + detail.pajak);
+    console.log("Total Biaya: " + detail.totalBiaya);
+};
 
-console.log("Total Biaya: " + totalBiaya);
+const detailPesanan = FazzFood(hargaMakanan, kodeVoucher, jarakPengiriman, dikenakanPajak);
+cetakDetailPesanan(detailPesanan);

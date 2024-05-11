@@ -15,6 +15,6 @@ function reverseSentence(text) {
     return reversed
 }
 
-const inputText = "Saya belajar pemrograman"
+const inputText = "Saya belajar javascript"
 const reversedText = reverseSentence(inputText)
 console.log(reversedText)

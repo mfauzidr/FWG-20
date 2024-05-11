@@ -28,9 +28,8 @@ const divideAndSort = (input) => {
         if (char === "0") {
             result += sortNumber(currentNum)
             currentNum = ""
-        } else {
-            currentNum += char
         }
+        currentNum += char
     }
     if (currentNum !== "") {
         result += sortNumber(currentNum)
@@ -41,4 +40,3 @@ const divideAndSort = (input) => {
 const input = 5956560159466056;
 const output = divideAndSort(input)
 console.log(output)
-
