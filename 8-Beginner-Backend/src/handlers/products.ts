@@ -1,44 +1,36 @@
 import { Request, Response } from 'express'
 import { findAll, findDetails, insert, totalCount, update, deleteProduct } from "../repositories/products"
 import { IProducts, IProductsBody, IProductsParams, IProductsQueryParams } from "../models/products"
+import { IErrResponse, IProductsResponse } from '../models/response'
+import paginLink from '../helper/paginLink'
 
-export const getAllProducts = async (req: Request, res: Response): Promise<Response> => {
+export const getAllProducts = async (req: Request<{}, {}, {}, IProductsQueryParams>, res: Response<IProductsResponse>) => {
   try {
-    const {
-      search = '',
-      sortBy = 'id',
-      orderBy = 'asc',
-      page = '1',
-      limit = '6'
-    } = req.query as IProductsQueryParams
 
-    const pageNum: number = parseInt(page, 10) || 1
-    const limitNum: number = parseInt(limit, 10)
-
-    const products = await findAll(search, sortBy, orderBy, pageNum, limitNum)
+    const products = await findAll(req.query)
     if (products.length < 1) {
       throw new Error('no_data')
     }
-    const count: number = await totalCount(search, sortBy, orderBy)
-
-    const totalPage = Math.ceil(count / limitNum)
-    const nextPage = pageNum + 1
-    const prevPage = pageNum - 1
-
-    return res.json({
-      success: true,
-      message: `List all products - ${count} products found`,
-      pageInfo: {
-        totalData: count,
-        currentPage: pageNum,
+    const limitData = req.query.limit || 6
+    const count = await totalCount(req.query)
+    const currentPage = parseInt((req.query.page as string) || '1');
+    const totalData = count
+    const totalPage = Math.ceil(totalData / limitData);
+    console.log(totalPage)
+    return res.status(200).json({
+      meta: {
+        totalData,
         totalPage,
-        nextPage: nextPage <= totalPage ? nextPage : null,
-        prevPage: prevPage > 0 ? prevPage : null
+        currentPage,
+        nextPage: currentPage != totalPage ? paginLink(req, "next") : null,
+        prevPage: currentPage > 1 ? paginLink(req, "previous") : null,
       },
-      results: products
+      message: `List all products. ${count} data found`,
+      results: products,
     })
+
   } catch (error) {
-    const err = error as { code?: string; column?: string; detail?: string; message: string }
+    const err = error as IErrResponse
     if (err.message === 'no_data') {
       return res.status(404).json({
         success: false,
@@ -46,7 +38,7 @@ export const getAllProducts = async (req: Request, res: Response): Promise<Respo
       })
     }
 
-    console.log(JSON.stringify(err))
+    console.log(err)
     return res.status(500).json({
       success: false,
       message: 'Internal Server Error'
@@ -72,7 +64,7 @@ export const getDetailProduct = async (req: Request<IProducts>, res: Response): 
       message: 'Product not found',
     })
   } catch (error) {
-    const err = error as { code?: string; column?: string; detail?: string; message: string }
+    const err = error as IErrResponse
 
     if (err.code === "22P02") {
       return res.status(400).json({
@@ -100,7 +92,7 @@ export const createProduct = async (req: Request<{}, {}, IProductsBody>, res: Re
     })
 
   } catch (error) {
-    const err = error as { code?: string; column?: string; detail?: string; message: string }
+    const err = error as IErrResponse
     if (err.code === '23502') {
       return res.status(400).json({
         success: false,
@@ -135,7 +127,7 @@ export const updateProduct = async (req: Request<IProductsParams, IProductsBody>
       message: 'Products not found',
     })
   } catch (error) {
-    const err = error as { code?: string; column?: string; detail?: string; message: string }
+    const err = error as IErrResponse
 
     if (err.code === "22P02") {
       return res.status(400).json({
@@ -171,7 +163,7 @@ export const deleteProducts = async (req: Request<IProductsParams, IProductsBody
       results: product,
     })
   } catch (error) {
-    const err = error as { code?: string; column?: string; detail?: string; message: string }
+    const err = error as IErrResponse
 
     if (err.code === "22P02") {
       return res.status(400).json({

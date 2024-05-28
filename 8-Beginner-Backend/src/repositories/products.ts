@@ -1,65 +1,96 @@
 import { QueryResult } from "pg"
 import db from "../config/pg"
-import { IProducts, IProductsBody } from "../models/products"
+import { IProducts, IProductsBody, IProductsQueryParams } from "../models/products"
 
-export const totalCount = async (keyword: string = '', sortBy: string, orderBy: string): Promise<number> => {
-  const columns: string[] = ["id", "name", "basePrice", "createdAt"]
-  const orderings: string[] = ["asc", "desc"]
+export const totalCount = async ({ search = '', filter = '', minimum = 0, maximum = Infinity }): Promise<number> => {
+  let query = `
+  SELECT COUNT(*) as total
+  FROM "products" "p"
+  LEFT JOIN "productCategories" "pc" ON "pc"."productId" = "p"."id"
+  LEFT JOIN "categories" "c" ON "pc"."categoryId" = "c"."id"
+  LEFT JOIN "productPromos" "pp" ON "pp"."productId" = "p"."id"
+  LEFT JOIN "promos" "pr" ON "pp"."promoId" = "pr"."id"`
 
-  sortBy = columns.includes(sortBy) ? sortBy : 'id'
-  orderBy = orderings.includes(orderBy) ? orderBy : 'asc'
+  let values: (string | number)[] = []
+  let conditions: string[] = []
 
-  const query = `
-    SELECT COUNT(*) as total
-    FROM "products"
-    WHERE "name" ILIKE $1
-  `
-  const values: string[] = [`%${keyword}%`]
+  const filters = [
+    { condition: filter === "product name" && search, query: `"p"."name" ILIKE $${values.length + 1}`, value: `%${search}%` },
+    { condition: filter === "category" && search, query: `"c"."name" ILIKE $${values.length + 1}`, value: `%${search}%` },
+    { condition: filter === "promo", query: `"pp"."promoId" IS NOT NULL` },
+    { condition: minimum > 0, query: `"p"."price" >= $${values.length + 1}`, value: minimum },
+    { condition: maximum < Infinity, query: `"p"."price" <= $${values.length + 1}`, value: maximum }
+  ];
+
+  filters.forEach(({ condition, query, value }) => {
+    if (condition) {
+      conditions.push(query);
+      if (value !== undefined) values.push(value);
+    }
+  });
+
+  if (conditions.length > 0) {
+    query += `WHERE ` + conditions.join(' AND ');
+  }
 
   const result: QueryResult<{ total: number }> = await db.query(query, values)
   return result.rows[0].total
 }
 
 export const findAll = async (
-  keyword: string = '',
-  sortBy: string = 'id',
-  orderBy: string = 'asc',
-  page: number = 1,
-  limit: number = 6
+  { search = '',
+    filter = '',
+    minimum = 0,
+    maximum = Infinity,
+    page = '1',
+    limit = 6 }: IProductsQueryParams
 ): Promise<IProducts[]> => {
-  const columns: string[] = ["id", "name", "basePrice", "createdAt"]
-  const orderings: string[] = ["asc", "desc"]
-  const limitData: number = limit
-  const offset: number = (page - 1) * limitData
+  const offset: number = (parseInt(page) - 1) * limit;
 
-  let orderByClause: string = `ORDER BY "p"."id" ASC`
+  let values: (string | number)[] = [];
+  let conditions: string[] = [];
+  let whereQuery: string = '';
 
-  switch (sortBy) {
+  const filters = [
+    { condition: filter === "product name" && search, whereQuery: `"p"."name" ILIKE $${values.length + 1}`, value: `%${search}%` },
+    { condition: filter === "category" && search, whereQuery: `"c"."name" ILIKE $${values.length + 1}`, value: `%${search}%` },
+    { condition: filter === "promo", whereQuery: `"pp"."promoId" IS NOT NULL` },
+    { condition: minimum > 0, whereQuery: `"p"."price" >= $${values.length + 1}`, value: minimum },
+    { condition: maximum < Infinity, whereQuery: `"p"."price" <= $${values.length + 1}`, value: maximum }
+  ];
+
+  filters.forEach(({ condition, whereQuery, value }) => {
+    if (condition) {
+      conditions.push(whereQuery);
+      if (value !== undefined) values.push(value);
+    }
+  });
+
+  if (conditions.length > 0) {
+    whereQuery = `WHERE ` + conditions.join(' AND ');
+  }
+
+  let orderByClause: string = `ORDER BY "p"."id" ASC`;
+
+  switch (filter) {
     case 'A-Z':
-      orderByClause = `ORDER BY "p"."name" ASC`
-      break
+      orderByClause = `ORDER BY "p"."name" ASC`;
+      break;
     case 'Z-A':
-      orderByClause = `ORDER BY "p"."name" DESC`
-      break
+      orderByClause = `ORDER BY "p"."name" DESC`;
+      break;
     case 'oldest':
-      orderByClause = `ORDER BY "p"."createdAt" ASC`
-      break
+      orderByClause = `ORDER BY "p"."createdAt" ASC`;
+      break;
     case 'newest':
-      orderByClause = `ORDER BY "p"."createdAt" DESC`
-      break
+      orderByClause = `ORDER BY "p"."createdAt" DESC`;
+      break;
     case 'priciest':
-      orderByClause = 'ORDER BY "p"."basePrice" DESC'
-      break
+      orderByClause = `ORDER BY "p"."price" DESC`;
+      break;
     case 'cheapest':
-      orderByClause = 'ORDER BY "p"."basePrice" ASC'
-      break
-    case 'category':
-      orderByClause = `ORDER BY "c"."name" ${orderBy === 'desc' ? 'DESC' : 'ASC'}`
-      break
-    default:
-      if (columns.includes(sortBy) && orderings.includes(orderBy)) {
-        orderByClause = `ORDER BY "p"."${sortBy}" ${orderBy.toUpperCase()}`
-      }
+      orderByClause = `ORDER BY "p"."price" ASC`;
+      break;
   }
 
   const query: string = `
@@ -68,28 +99,32 @@ export const findAll = async (
       "p"."name" AS "productName",
       "c"."name" AS "category",
       "p"."description",
-      "p"."basePrice",
+      "p"."price",
+      "pr"."name" AS "promo",
+      "p"."discountPrice",
       "p"."uuid",
       "p"."createdAt",
       "p"."updatedAt"
     FROM "products" "p"
     LEFT JOIN "productCategories" "pc" ON "pc"."productId" = "p"."id"
     LEFT JOIN "categories" "c" ON "pc"."categoryId" = "c"."id"
-    WHERE "p"."name" ILIKE $1
+    LEFT JOIN "productPromos" "pp" ON "pp"."productId" = "p"."id"
+    LEFT JOIN "promos" "pr" ON "pp"."promoId" = "pr"."id"
+    ${whereQuery}
     ${orderByClause}
-    LIMIT ${limitData} OFFSET ${offset}
-  `
+    LIMIT ${limit} OFFSET ${offset}
+  `;
 
-  const values: string[] = [`%${keyword}%`]
-  const result: QueryResult<IProducts> = await db.query(query, values)
-  return result.rows
-}
+  const result: QueryResult<IProducts> = await db.query(query, values);
+  return result.rows;
+};
+
 
 export const findDetails = async (
   uuid: string,
   selectedColumns?: string[]
 ): Promise<QueryResult<IProducts>> => {
-  const columns: string[] = ["id", "name", "image", "description", "basePrice", "isRecommended", "uuid", "createdAt"]
+  const columns: string[] = ["id", "name", "image", "description", "price", "isRecommended", "uuid", "createdAt"]
   const selectColumns: string[] = selectedColumns || columns
 
   const query = `

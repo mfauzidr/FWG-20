@@ -16,10 +16,12 @@ export interface IProductsParams {
 
 export interface IProductsQueryParams {
   search?: string
-  sortBy?: string
+  filter?: string
   orderBy?: string
+  maximum?: number
+  minimum?: number
   page?: string
-  limit?: string
+  limit?: number
 }
 
 export interface IProductsBody {

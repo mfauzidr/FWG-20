@@ -1,41 +1,34 @@
 import { Request, Response } from 'express'
 import { findAll, findDetails, insert, update, deleteOrder, totalCount } from "../repositories/orders"
-import { IOrders, IOrdersBody, IOrdersParams, IOrdersQueryParams } from "../models/orders"
+import { IOrdersBody, IOrdersParams, IOrdersQueryParams } from "../models/orders"
+import { IErrResponse, IOrderResponse } from '../models/response';
+import paginLink from '../helper/paginLink';
 
-export const getAllOrders = async (req: Request, res: Response): Promise<Response> => {
+export const getAllOrders = async (req: Request<{}, {}, {}, IOrdersQueryParams>, res: Response<IOrderResponse>) => {
   try {
-    const {
-      page = '1',
-      limit = '6'
-    } = req.query as IOrdersQueryParams
-
-    const pageNum: number = parseInt(page, 10) || 1
-    const limitNum: number = parseInt(limit, 10)
-
-    const orders = await findAll(pageNum, limitNum);
+    const orders = await findAll(req.query);
     if (orders.length < 1) {
       throw new Error('no_data')
     }
-    const count: number = await totalCount()
-
-    const totalPage = Math.ceil(count / limitNum)
-    const nextPage = pageNum + 1
-    const prevPage = pageNum - 1
+    const limitData = req.query.limit || 3
+    const count = await totalCount(req.query);
+    const currentPage = parseInt((req.query.page as string) || '1');
+    const totalData = count
+    const totalPage = Math.ceil(totalData / limitData);
 
     return res.json({
-      success: true,
-      message: 'List all orders',
-      pageInfo: {
-        totalData: count,
-        currentPage: pageNum,
+      meta: {
+        totalData,
         totalPage,
-        nextPage: nextPage <= totalPage ? nextPage : null,
-        prevPage: prevPage > 0 ? prevPage : null
+        currentPage,
+        nextPage: currentPage != totalPage ? paginLink(req, "next") : null,
+        prevPage: currentPage > 1 ? paginLink(req, "previous") : null,
       },
-      results: orders,
+      message: `List all orders. ${count} data found`,
+      results: orders
     });
   } catch (error) {
-    const err = error as { code?: string; column?: string; detail?: string; message: string }
+    const err = error as IErrResponse
     if (err.message === 'no_data') {
       return res.status(404).json({
         success: false,
@@ -51,26 +44,26 @@ export const getAllOrders = async (req: Request, res: Response): Promise<Respons
   }
 };
 
-export const getDetailOrders = async (req: Request<IOrdersParams>, res: Response): Promise<Response> => {
+export const getDetailOrders = async (req: Request, res: Response<IOrderResponse>): Promise<Response> => {
   const { uuid } = req.params;
-  console.log(uuid)
   try {
-    const orders = await findDetails(uuid);
+    const orders = await findDetails(uuid as string);
+    console.log(orders)
 
-    if (orders) {
-      return res.json({
-        success: true,
-        message: 'OK',
-        results: orders,
+    if (orders.length < 1) {
+      return res.status(404).json({
+        success: false,
+        message: 'Order details not found',
       });
     }
-    return res.status(404).json({
-      success: false,
-      message: 'Order not found',
+    return res.json({
+      success: true,
+      message: 'OK',
+      results: orders,
     });
 
   } catch (error) {
-    const err = error as { code?: string; column?: string; detail?: string; message: string }
+    const err = error as IErrResponse
 
     if (err.code === "22P02") {
       return res.status(400).json({
@@ -79,7 +72,7 @@ export const getDetailOrders = async (req: Request<IOrdersParams>, res: Response
       })
     }
 
-    console.log(JSON.stringify(err))
+    console.log(err)
     return res.status(500).json({
       success: false,
       message: 'Internal server error',
@@ -87,16 +80,16 @@ export const getDetailOrders = async (req: Request<IOrdersParams>, res: Response
   }
 };
 
-export const createOrders = async (req: Request<{}, {}, IOrdersBody>, res: Response): Promise<Response> => {
+export const createOrders = async (req: Request<{}, {}, IOrdersBody>, res: Response<IOrderResponse>): Promise<Response> => {
   try {
-    const orders: IOrdersBody = await insert(req.body);
+    const orders = await insert(req.body);
     return res.json({
       success: true,
       message: 'Create order successfully',
       results: orders,
     });
   } catch (error) {
-    const err = error as { code?: string; column?: string; detail?: string; message: string }
+    const err = error as IErrResponse
     if (err.code === '23502') {
       return res.status(400).json({
         success: false,
@@ -113,7 +106,7 @@ export const createOrders = async (req: Request<{}, {}, IOrdersBody>, res: Respo
 };
 
 
-export const updateOrders = async (req: Request<IOrdersParams, IOrdersBody>, res: Response): Promise<Response> => {
+export const updateOrders = async (req: Request<IOrdersParams, {}, IOrdersBody>, res: Response<IOrderResponse>): Promise<Response> => {
   const { uuid } = req.params
   const data = {
     ...req.body
@@ -132,7 +125,7 @@ export const updateOrders = async (req: Request<IOrdersParams, IOrdersBody>, res
       results: orders,
     });
   } catch (error) {
-    const err = error as { code?: string; column?: string; detail?: string; message: string }
+    const err = error as IErrResponse
     console.error(err)
     if (err.code === "22P02") {
       return res.status(400).json({
@@ -149,7 +142,7 @@ export const updateOrders = async (req: Request<IOrdersParams, IOrdersBody>, res
   }
 };
 
-export const deleteOrders = async (req: Request<IOrdersParams, IOrdersBody>, res: Response): Promise<Response> => {
+export const deleteOrders = async (req: Request<IOrdersParams>, res: Response<IOrderResponse>): Promise<Response> => {
   const { uuid } = req.params
 
   try {
@@ -168,7 +161,7 @@ export const deleteOrders = async (req: Request<IOrdersParams, IOrdersBody>, res
       results: order,
     })
   } catch (error) {
-    const err = error as { code?: string; column?: string; detail?: string; message: string }
+    const err = error as IErrResponse
 
     if (err.code === "22P02") {
       return res.status(400).json({

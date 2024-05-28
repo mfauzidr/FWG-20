@@ -13,8 +13,9 @@ export interface IOrdersParams {
 }
 
 export interface IOrdersQueryParams {
+  searchOrder?: string
   page?: string
-  limit?: string
+  limit?: number
 }
 
 export interface IOrdersBody {

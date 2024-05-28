@@ -1,25 +1,27 @@
 export interface IUser extends IUserBody {
-  id: number
-  uuid: string
-  createdAt: Date
-  updatedAt?: Date
+  id: number;
+  uuid: string;
+  address?: string;
+  createdAt: Date;
+  updatedAt?: Date;
 }
 
 export interface IUserParams {
-  uuid: string
+  uuid: string;
 }
 
 export interface IUserQueryParams {
-  search?: string
-  sortBy?: string
-  orderBy?: string
-  page?: string
+  search?: string;
+  findBy?: string;
+  orderBy?: string;
+  page?: string;
+  limit?: number
 }
 
 export interface IUserBody {
-  fullName: string
-  email: string
-  password: string
-  phoneNumber: string
-  role: string
+  fullName: string;
+  email: string;
+  password: string;
+  phoneNumber: string;
+  role: string;
 }

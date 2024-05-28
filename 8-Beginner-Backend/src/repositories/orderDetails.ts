@@ -2,12 +2,13 @@ import db from "../config/pg";
 import { IOrderDetails } from "../models/orderDetails"
 
 export const findAll = async (): Promise<IOrderDetails[]> => {
-  const sql = `
+  const query = `
     SELECT
     "od"."id",
     "o"."orderNumber",
     "p"."name" AS "productName",
-    "ps"."size", "pv"."name" AS "variant",
+    "ps"."size",
+    "pv"."name" AS "variant",
     "od"."quantity"
     FROM "orderDetails" "od"
     JOIN "products" "p" ON "od"."productId" = "p"."id"
@@ -16,12 +17,12 @@ export const findAll = async (): Promise<IOrderDetails[]> => {
     JOIN "orders" "o" ON "od"."orderId" = "o"."id"
     `;
   const values: any[] = [];
-  const { rows } = await db.query(sql, values);
+  const { rows } = await db.query(query, values);
   return rows;
 };
 
 export const findDetails = async (id: number): Promise<IOrderDetails> => {
-  const sql = `
+  const query = `
     SELECT
     "o"."orderNumber",
     "p"."name" AS "productName",
@@ -36,7 +37,7 @@ export const findDetails = async (id: number): Promise<IOrderDetails> => {
     WHERE "od"."id" = $1
     `;
   const values: any[] = [id];
-  const { rows } = await db.query(sql, values);
+  const { rows } = await db.query(query, values);
   return rows[0];
 };
 
@@ -51,7 +52,7 @@ export const insert = async (data: any): Promise<IOrderDetails> => {
 
   const insertedValues = values.map((value, index) => `$${index + 1}`).join(', ');
 
-  const sql = `
+  const query = `
         INSERT INTO "orderDetails"
         (${columns.join(', ')})
         VALUES
@@ -59,7 +60,7 @@ export const insert = async (data: any): Promise<IOrderDetails> => {
         RETURNING *
     `;
 
-  const { rows } = await db.query(sql, values);
+  const { rows } = await db.query(query, values);
   return rows[0];
 };
 
@@ -72,7 +73,7 @@ export const insert = async (data: any): Promise<IOrderDetails> => {
 //     columns.push(`"${item}" = $${values.length}`);
 //   }
 
-//   const sql = `
+//   const query = `
 //         UPDATE "orderDetails"
 //         SET ${columns.join(', ')}
 //         WHERE "id" = $${values.length + 1}
@@ -81,14 +82,14 @@ export const insert = async (data: any): Promise<IOrderDetails> => {
 
 //   values.push(id);
 
-//   const { rows } = await db.query(sql, values);
+//   const { rows } = await db.query(query, values);
 //   return rows[0];
 // };
 
 export const deleteOrderDetail = async (id: number): Promise<IOrderDetails | undefined> => {
-  const sql = `DELETE FROM "orderDetails" WHERE "id" = $1
+  const query = `DELETE FROM "orderDetails" WHERE "id" = $1
     RETURNING *`;
   const values: any[] = [id];
-  const { rows } = await db.query(sql, values);
+  const { rows } = await db.query(query, values);
   return rows[0];
 };
