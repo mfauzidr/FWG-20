@@ -3,6 +3,7 @@ import { findAll, findDetails, insert, totalCount, update, deleteProduct } from 
 import { IProducts, IProductsBody, IProductsParams, IProductsQueryParams } from "../models/products"
 import { IErrResponse, IProductsResponse } from '../models/response'
 import paginLink from '../helper/paginLink'
+import multer from 'multer'
 
 export const getAllProducts = async (req: Request<{}, {}, {}, IProductsQueryParams>, res: Response<IProductsResponse>) => {
   try {
@@ -81,9 +82,13 @@ export const getDetailProduct = async (req: Request<IProducts>, res: Response): 
   }
 }
 
-export const createProduct = async (req: Request<{}, {}, IProductsBody>, res: Response): Promise<Response> => {
+export const createProduct = async (req: Request<{}, {}, IProductsBody>, res: Response<IProductsResponse>): Promise<Response> => {
   try {
-    const product: IProductsBody = await insert(req.body)
+    if (req.file) {
+      const imgUrl = `/imgs/${req.file.path}`
+      req.body.image = imgUrl;
+    }
+    const product = await insert(req.body)
 
     return res.json({
       success: true,
@@ -108,27 +113,48 @@ export const createProduct = async (req: Request<{}, {}, IProductsBody>, res: Re
   }
 }
 
-export const updateProduct = async (req: Request<IProductsParams, IProductsBody>, res: Response): Promise<Response> => {
+export const updateProduct = async (req: Request, res: Response<IProductsResponse>): Promise<Response> => {
+  const { uuid } = req.params
   try {
-    const { uuid } = req.params
-    const data = {
+    const data: Partial<IProductsBody> = {
       ...req.body
+    }
+    console.log(req.body)
+
+    if (req.file) {
+      const imgUrl = `/imgs/${req.file.filename}`
+      data.image = imgUrl;
     }
     const product = await update(uuid, data)
     if (product) {
       return res.json({
         success: true,
         message: 'Update Success',
-        results: product,
+        results: product
       })
     }
     return res.status(404).json({
       success: false,
-      message: 'Products not found',
+      message: 'Products not found'
     })
   } catch (error) {
     const err = error as IErrResponse
 
+    if (err instanceof multer.MulterError) {
+      if (err.message === 'Incorrect File') {
+        return res.status(400).json({
+          success: false,
+          message: 'Incorrect file type. Only jpg, png, and jpeg are allowed.'
+        });
+      }
+    }
+
+    if (err.message === 'File too large') {
+      return res.status(400).json({
+        success: false,
+        message: 'File is too large. Maximum size is 1MB.'
+      });
+    }
     if (err.code === "22P02") {
       return res.status(400).json({
         success: false,
@@ -136,10 +162,9 @@ export const updateProduct = async (req: Request<IProductsParams, IProductsBody>
       })
     }
 
-    console.error(JSON.stringify(error))
     return res.status(500).json({
       success: false,
-      message: 'Internal server error',
+      message: 'Internal server error'
     })
   }
 }

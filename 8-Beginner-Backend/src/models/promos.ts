@@ -12,6 +12,10 @@ export interface IPromosParams {
   id: number
 }
 
+export interface IPromosQueryParams {
+  search?: string
+}
+
 export interface IPromosBody {
   name: string
   code: string

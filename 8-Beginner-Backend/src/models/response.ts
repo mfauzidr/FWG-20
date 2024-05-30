@@ -1,5 +1,6 @@
 import { IOrders } from "./orders";
 import { IProducts } from "./products";
+import { IPromos } from "./promos";
 import { IUser } from "./users";
 
 interface IPaginationMeta {
@@ -20,9 +21,17 @@ interface IBasicResponse {
 export interface IUserResponse extends IBasicResponse {
   results?: IUser[]
 }
+export interface IAuthResponse extends IBasicResponse {
+  results?: { token: string }[];
+  uuid?: string
+}
 
 export interface IProductsResponse extends IBasicResponse {
   results?: IProducts[]
+}
+
+export interface IPromosResponse extends IBasicResponse {
+  results?: IPromos[]
 }
 
 export interface IOrderResponse extends IBasicResponse {

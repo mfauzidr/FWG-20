@@ -16,7 +16,7 @@ export const totalCount = async ({ search = '', filter = '', minimum = 0, maximu
 
   const filters = [
     { condition: filter === "product name" && search, query: `"p"."name" ILIKE $${values.length + 1}`, value: `%${search}%` },
-    { condition: filter === "category" && search, query: `"c"."name" ILIKE $${values.length + 1}`, value: `%${search}%` },
+    { condition: filter === "category" && search, query: `"c"."name" = $${values.length + 1}`, value: `%${search}%` },
     { condition: filter === "promo", query: `"pp"."promoId" IS NOT NULL` },
     { condition: minimum > 0, query: `"p"."price" >= $${values.length + 1}`, value: minimum },
     { condition: maximum < Infinity, query: `"p"."price" <= $${values.length + 1}`, value: maximum }
@@ -141,7 +141,7 @@ export const findDetails = async (
   return rows[0]
 }
 
-export const insert = async (data: IProductsBody): Promise<IProducts> => {
+export const insert = async (data: IProductsBody): Promise<IProducts[]> => {
   const columns: string[] = []
   const values: any[] = []
 
@@ -160,13 +160,13 @@ export const insert = async (data: IProductsBody): Promise<IProducts> => {
     RETURNING *
   `
 
-  const result: QueryResult<IProducts> = await db.query(query, values)
-  return result.rows[0]
+  const result: QueryResult<IProducts> = await db.query(query, values);
+  return result.rows
 }
 
-export const update = async (uuid: string, data: IProductsBody): Promise<IProducts> => {
+export const update = async (uuid: string, data: Partial<IProductsBody>): Promise<IProducts[]> => {
   const columns: string[] = []
-  const values: string[] = [uuid]
+  const values: any[] = [uuid]
   for (const [key, value] of Object.entries(data)) {
     values.push(value)
     columns.push(`"${key}"=$${values.length}`)
@@ -177,11 +177,11 @@ export const update = async (uuid: string, data: IProductsBody): Promise<IProduc
         SET ${columns.join(', ')},
         "updatedAt" = now()
         WHERE "uuid" = $1
-        RETURNING *
+        RETURNING ${columns.join(', ')}
     `
 
-  const { rows } = await db.query<IProducts>(query, values)
-  return rows[0]
+  const result: QueryResult<IProducts> = await db.query(query, values);
+  return result.rows
 }
 
 export const deleteProduct = async (uuid: string): Promise<IProducts> => {

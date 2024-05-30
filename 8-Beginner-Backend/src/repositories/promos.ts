@@ -1,18 +1,23 @@
 import { QueryResult } from "pg"
 import db from "../config/pg"
-import { IPromos, IPromosBody } from "../models/promos"
+import { IPromos, IPromosBody, IPromosQueryParams } from "../models/promos"
 
-export const findAll = async (): Promise<IPromos[]> => {
-  const sql = `SELECT * FROM "promos"`;
-  const { rows }: QueryResult<IPromos> = await db.query(sql);
-  return rows;
+export const findAll = async ({ search = '' }: IPromosQueryParams): Promise<IPromos[]> => {
+  let query = `SELECT * FROM "promos"`;
+  let values: string[] = []
+  if (search) {
+    query += `WHERE "name" ILIKE $1`
+    values.push(`%${search}%`)
+  }
+  const result: QueryResult<IPromos> = await db.query(query, values);
+  return result.rows;
 };
 
-export const findDetails = async (id: number): Promise<IPromos | null> => {
-  const sql = `SELECT * FROM "promos" WHERE "id" = $1`;
+export const findDetails = async (id: number): Promise<IPromos[]> => {
+  const query = `SELECT * FROM "promos" WHERE "id" = $1`;
   const values = [id];
-  const { rows }: QueryResult<IPromos> = await db.query(sql, values);
-  return rows[0] || null;
+  const results: QueryResult<IPromos> = await db.query(query, values);
+  return results.rows;
 };
 
 export const insert = async (data: IPromosBody): Promise<IPromos> => {
@@ -24,7 +29,7 @@ export const insert = async (data: IPromosBody): Promise<IPromos> => {
     columns.push(`"${key}"`)
   }
 
-  const insertedValues = values.map((_, index) => `$${index + 1}`).join(', ')
+  const insertedValues: string = values.map((_, index) => `$${index + 1}`).join(', ')
 
   const query = `
     INSERT INTO "promos"
@@ -58,13 +63,13 @@ export const update = async (id: number, data: IPromosBody): Promise<IPromos> =>
   return rows[0]
 }
 
-export const deletePromo = async (id: number): Promise<IPromos | null> => {
-  const sql = `
+export const deletePromo = async (id: number): Promise<IPromos> => {
+  const query = `
     DELETE FROM "promos"
     WHERE "id" = $1
     RETURNING *
   `;
   const values = [id];
-  const { rows }: QueryResult<IPromos> = await db.query(sql, values);
+  const { rows }: QueryResult<IPromos> = await db.query(query, values);
   return rows[0] || null;
 };

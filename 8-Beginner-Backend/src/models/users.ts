@@ -1,13 +1,13 @@
 export interface IUser extends IUserBody {
   id: number;
   uuid: string;
-  address?: string;
   createdAt: Date;
   updatedAt?: Date;
 }
 
 export interface IUserParams {
   uuid: string;
+  email?: string
 }
 
 export interface IUserQueryParams {
@@ -24,4 +24,6 @@ export interface IUserBody {
   password: string;
   phoneNumber: string;
   role: string;
+  address?: string;
+  image?: string
 }

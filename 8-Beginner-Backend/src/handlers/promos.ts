@@ -1,17 +1,29 @@
 import { Request, Response } from 'express'
 import { findAll, findDetails, insert, update, deletePromo } from "../repositories/promos"
-import { IPromos, IPromosBody, IPromosParams, } from "../models/promos"
+import { IPromos, IPromosBody, IPromosParams, IPromosQueryParams, } from "../models/promos"
+import { IErrResponse, IPromosResponse } from '../models/response';
 
-export const getAllPromos = async (req: Request, res: Response): Promise<Response> => {
+export const getAllPromos = async (req: Request<{}, {}, {}, IPromosQueryParams>, res: Response<IPromosResponse>) => {
   try {
-    const promos: IPromos[] = await findAll();
+    const promos = await findAll(req.query);
+    console.log(promos)
+    if (promos.length < 1) {
+      throw new Error('no_data');
+    }
     return res.json({
       success: true,
       message: 'List all promos',
       results: promos
     });
   } catch (error) {
-    const err = error as { code?: string; column?: string; detail?: string; message: string }
+    const err = error as IErrResponse
+    if (err.message === 'no_data') {
+      return res.status(404).json({
+        success: false,
+        message: 'Data not found'
+      });
+    }
+
     console.error(JSON.stringify(error));
     return res.status(500).json({
       success: false,
@@ -38,7 +50,7 @@ export const getDetailPromos = async (req: Request<IPromos>, res: Response): Pro
       results: promo
     });
   } catch (error) {
-    const err = error as { code?: string; column?: string; detail?: string; message: string }
+    const err = error as IErrResponse
 
     console.error(JSON.stringify(error));
     return res.status(500).json({
@@ -57,7 +69,7 @@ export const createPromos = async (req: Request, res: Response): Promise<Respons
       results: promo
     });
   } catch (error) {
-    const err = error as { code?: string; column?: string; detail?: string; message: string }
+    const err = error as IErrResponse
     console.error(JSON.stringify(error));
     if (err.code === "23502") {
       return res.status(400).json({
@@ -93,7 +105,7 @@ export const updatePromos = async (req: Request<IPromosParams, IPromosBody>, res
       results: promo
     });
   } catch (error) {
-    const err = error as { code?: string; column?: string; detail?: string; message: string }
+    const err = error as IErrResponse
 
     console.error(JSON.stringify(error));
     return res.status(500).json({
@@ -121,7 +133,7 @@ export const deletePromos = async (req: Request<IPromosParams, IPromosBody>, res
       results: promo
     });
   } catch (error) {
-    const err = error as { code?: string; column?: string; detail?: string; message: string }
+    const err = error as IErrResponse
 
     console.error(JSON.stringify(error));
     return res.status(500).json({

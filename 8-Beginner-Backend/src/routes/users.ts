@@ -1,16 +1,18 @@
 import { Router } from "express"
 import { getAllUsers, getDetailUser, createUsers, updateUsers, deleteUsers } from "../handlers/users"
+import { authMiddleware } from "../middlewares/auth.middleware"
+import { singleUploader } from "../middlewares/upload"
 
 const usersRouter = Router()
 
-usersRouter.get('/', getAllUsers)
+usersRouter.get('/', authMiddleware(["admin"]), getAllUsers)
 
-usersRouter.get('/:uuid', getDetailUser)
+usersRouter.get('/:uuid', authMiddleware(["admin", "customer"]), getDetailUser)
 
-usersRouter.post('/', createUsers)
+usersRouter.post('/', authMiddleware(["admin"]), singleUploader("image"), createUsers)
 
-usersRouter.patch('/:uuid', updateUsers)
+usersRouter.patch('/:uuid', authMiddleware(["admin", "customer"]), singleUploader("image"), updateUsers)
 
-usersRouter.delete('/:uuid', deleteUsers)
+usersRouter.delete('/:uuid', authMiddleware(["admin"]), deleteUsers)
 
 export default usersRouter

@@ -2,8 +2,6 @@ import { QueryResult } from "pg"
 import db from "../config/pg"
 import { IUser, IUserBody, IUserQueryParams } from "../models/users"
 
-
-
 export const totalCount = async ({ search = '', findBy = '' }): Promise<number> => {
   let query = `SELECT COUNT(*) as total FROM "users"`;
   let values: string[] = [];
@@ -70,6 +68,7 @@ export const findAllUsers = async (
       "password",
       "phoneNumber",
       "role",
+      "image",
       "uuid",
       "createdAt",
       "updatedAt"
@@ -92,6 +91,7 @@ export const findDetails = async (uuid: string): Promise<IUser[]> => {
       "password",
       "phoneNumber",
       "role",
+      "image",
       "uuid",
       "createdAt",
       "updatedAt"
@@ -110,7 +110,7 @@ export const insert = async (data: IUserBody): Promise<IUser[]> => {
     columns.push(`"${key}"`)
   }
 
-  const insertedValues = values.map((_, index) => `$${index + 1}`).join(', ')
+  const insertedValues: string = values.map((_, index) => `$${index + 1}`).join(', ')
 
   const query = `
         INSERT INTO "users"
@@ -124,7 +124,7 @@ export const insert = async (data: IUserBody): Promise<IUser[]> => {
   return result.rows
 }
 
-export const update = async (uuid: string, data: IUserBody): Promise<IUser[]> => {
+export const update = async (uuid: string, data: Partial<IUserBody>): Promise<IUser[]> => {
   const columns: string[] = []
   const values: string[] = [uuid]
   for (const [key, value] of Object.entries(data)) {

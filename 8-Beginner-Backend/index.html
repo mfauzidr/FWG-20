@@ -13,15 +13,15 @@
     <p id="response"></p>
   </body>
   <script>
-    const patchReq = (nis) => {
+    const patchReq = (uuid) => {
       axios
-        .patch(`http://localhost:8000/siswa/${nis}/pwd`, { pwd: "agus" })
+        .patch(`http://localhost:8888/forgot-password`, { pwd: "admin1234" })
         .then((res) => (response.innerHTML = `<span>${res.data.msg}</span>`))
         .catch((err) => console.log(err));
     };
     const getReq = () => {
       axios
-        .get(`http://localhost:8000/siswa`)
+        .get(`http://localhost:88888/users`)
         .then((res) => (response.innerHTML = `<span>${res.data.msg}</span>`))
         .catch((err) => console.log(err));
     };

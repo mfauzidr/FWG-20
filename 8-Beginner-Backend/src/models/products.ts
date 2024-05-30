@@ -1,8 +1,8 @@
 export interface IProducts extends IProductsBody {
   id: number
   uuid: string
-  category?: string
   image?: string
+  category?: string
   discount?: string
   isRecommended?: boolean
   rating?: number
@@ -27,5 +27,6 @@ export interface IProductsQueryParams {
 export interface IProductsBody {
   name: string
   description: string
-  basePrice: number
+  price: number
+  image?: string
 }
