@@ -6,7 +6,6 @@ export const getEmail = async (email: string): Promise<IUser> => {
   const query = `
     SELECT
       "uuid",
-      "fullName",
       "email",
       "password",
       "role"
@@ -21,10 +20,10 @@ export const register = async (data: IUserBody, hashedPassword: string): Promise
 
   const query = `
         INSERT INTO "users"
-        ("fullName", "email", "password")
+        ("fullName", "email", "password", "role")
         VALUES
-        ($1, $2, $3)
-        RETURNING "fullName", "email", "uuid"
+        ($1, $2, $3, "customer")
+        RETURNING "fullName", "email", "uuid", "role"
     `
 
   const { fullName, email } = data

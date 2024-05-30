@@ -121,7 +121,7 @@ export const registerUser = async (req: Request<{}, {}, IUserBody>, res: Respons
 }
 
 export const forgotPassword = async (req: Request<{}, {}, IUserBody>, res: Response<IUserResponse>) => {
-  const { email, password } = req.body
+  const { email, password, role } = req.body
 
   try {
     const user = await getEmail(email)
