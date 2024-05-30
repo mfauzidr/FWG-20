@@ -29,8 +29,7 @@ export const login = async (req: Request<{}, {}, IUserBody>, res: Response<IAuth
     return res.json({
       success: true,
       message: `Login Success. Welcome ${name}`,
-      results: [{ token }],
-      uuid: uuid
+      results: [{ token }]
     });
   } catch (error) {
     const err = error as IErrResponse
