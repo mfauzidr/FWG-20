@@ -4,6 +4,8 @@ import { IProducts, IProductsBody, IProductsParams, IProductsQueryParams } from 
 import { IErrResponse, IProductsResponse } from '../models/response'
 import paginLink from '../helper/paginLink'
 import multer from 'multer'
+import fs from "fs"
+import path from "path"
 
 export const getAllProducts = async (req: Request<{}, {}, {}, IProductsQueryParams>, res: Response<IProductsResponse>) => {
   try {
@@ -12,11 +14,11 @@ export const getAllProducts = async (req: Request<{}, {}, {}, IProductsQueryPara
     if (products.length < 1) {
       throw new Error('no_data')
     }
-    const limitData = req.query.limit || 6
+    const limit = req.query.limit || '6'
     const count = await totalCount(req.query)
     const currentPage = parseInt((req.query.page as string) || '1');
     const totalData = count
-    const totalPage = Math.ceil(totalData / limitData);
+    const totalPage = Math.ceil(totalData / parseInt(limit as string));
     console.log(totalPage)
     return res.status(200).json({
       meta: {
@@ -46,26 +48,28 @@ export const getAllProducts = async (req: Request<{}, {}, {}, IProductsQueryPara
     })
   }
 }
-export const getDetailProduct = async (req: Request<IProducts>, res: Response): Promise<Response> => {
+export const getDetailProduct = async (req: Request<IProducts>, res: Response<IProductsResponse>): Promise<Response> => {
   const { uuid } = req.params
-  const { columns } = req.query
-  const selectedColumns = columns ? (columns as string).split(',') : undefined
 
   try {
-    const product = await findDetails(uuid, selectedColumns)
-    if (product) {
-      return res.json({
-        success: true,
-        message: 'OK',
-        results: product,
-      })
+    const product = await findDetails(uuid as string)
+    if (product.length === 0) {
+      throw new Error("Not Found")
     }
-    return res.status(404).json({
-      success: false,
-      message: 'Product not found',
+    return res.json({
+      success: true,
+      message: 'OK',
+      results: product,
     })
   } catch (error) {
     const err = error as IErrResponse
+
+    if (err.message === "Not Found") {
+      return res.status(404).json({
+        success: false,
+        message: 'Product not found',
+      })
+    }
 
     if (err.code === "22P02") {
       return res.status(400).json({
@@ -74,7 +78,7 @@ export const getDetailProduct = async (req: Request<IProducts>, res: Response): 
       })
     }
 
-    console.log(JSON.stringify(err))
+    console.log(err)
     return res.status(500).json({
       success: false,
       message: 'Internal server error',
@@ -85,7 +89,7 @@ export const getDetailProduct = async (req: Request<IProducts>, res: Response): 
 export const createProduct = async (req: Request<{}, {}, IProductsBody>, res: Response<IProductsResponse>): Promise<Response> => {
   try {
     if (req.file) {
-      const imgUrl = `/imgs/${req.file.path}`
+      const imgUrl = `/imgs/${req.file.filename}`
       req.body.image = imgUrl;
     }
     const product = await insert(req.body)
@@ -98,6 +102,21 @@ export const createProduct = async (req: Request<{}, {}, IProductsBody>, res: Re
 
   } catch (error) {
     const err = error as IErrResponse
+
+    if (req.file) {
+      const filePath = path.join(__dirname, '..', 'public', 'imgs', req.file.filename);
+      fs.unlink(filePath, (unlinkErr) => {
+        if (unlinkErr) console.error('Error deleting file:', unlinkErr);
+      });
+    }
+
+    if (err.code === "23505") {
+      return res.status(400).json({
+        success: false,
+        message: `Product name already exist.`
+      })
+    }
+
     if (err.code === '23502') {
       return res.status(400).json({
         success: false,
@@ -105,7 +124,7 @@ export const createProduct = async (req: Request<{}, {}, IProductsBody>, res: Re
       })
     }
 
-    console.log(JSON.stringify(err))
+    console.log(err)
     return res.status(500).json({
       success: false,
       message: 'Internal server error',
@@ -113,18 +132,19 @@ export const createProduct = async (req: Request<{}, {}, IProductsBody>, res: Re
   }
 }
 
-export const updateProduct = async (req: Request, res: Response<IProductsResponse>): Promise<Response> => {
+export const updateProduct = async (req: Request<{ uuid: string }, {}, IProductsBody>, res: Response<IProductsResponse>): Promise<Response> => {
   const { uuid } = req.params
   try {
     const data: Partial<IProductsBody> = {
       ...req.body
     }
-    console.log(req.body)
 
     if (req.file) {
       const imgUrl = `/imgs/${req.file.filename}`
-      data.image = imgUrl;
+      req.body.image = imgUrl;
     }
+
+    console.log(req.body);
     const product = await update(uuid, data)
     if (product) {
       return res.json({
@@ -139,6 +159,12 @@ export const updateProduct = async (req: Request, res: Response<IProductsRespons
     })
   } catch (error) {
     const err = error as IErrResponse
+    if (req.file) {
+      const filePath = path.join(__dirname, '..', 'public', 'imgs', req.file.filename);
+      fs.unlink(filePath, (unlinkErr) => {
+        if (unlinkErr) console.error('Error deleting file:', unlinkErr);
+      });
+    }
 
     if (err instanceof multer.MulterError) {
       if (err.message === 'Incorrect File') {
@@ -161,7 +187,7 @@ export const updateProduct = async (req: Request, res: Response<IProductsRespons
         message: `Invalid UUID format.`
       })
     }
-
+    console.log(error);
     return res.status(500).json({
       success: false,
       message: 'Internal server error'
@@ -169,13 +195,13 @@ export const updateProduct = async (req: Request, res: Response<IProductsRespons
   }
 }
 
-export const deleteProducts = async (req: Request<IProductsParams, IProductsBody>, res: Response): Promise<Response> => {
+export const deleteProducts = async (req: Request<IProductsParams>, res: Response<IProductsResponse>): Promise<Response> => {
   const { uuid } = req.params
 
   try {
     const product = await deleteProduct(uuid)
 
-    if (!product) {
+    if (product.length === 0) {
       return res.status(404).json({
         success: false,
         message: 'Product not found',

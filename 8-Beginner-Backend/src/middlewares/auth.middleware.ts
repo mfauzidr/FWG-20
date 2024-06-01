@@ -6,7 +6,7 @@ import { IAuthResponse } from "../models/response";
 import { IPayload } from "../models/payload";
 
 export const jwtOptions: SignOptions = {
-  expiresIn: "15m",
+  expiresIn: "30m",
   issuer: process.env.JWT_ISSUER,
 };
 

@@ -1,8 +1,8 @@
 import multer, { Field, Options, diskStorage } from "multer";
 import path from "path";
-import { AppParams } from "../models/params";
 import { NextFunction } from "express-serve-static-core";
 import { Request, Response } from "express"
+import fs from "fs"
 
 const multerDisk = diskStorage({
   destination: (req, file, cb) => {
@@ -33,11 +33,29 @@ const uploader = multer(multerOptions);
 export const singleUploader = (fieldName: string) => (req: Request, res: Response, next: NextFunction) => {
   const upload = uploader.single(fieldName)
   upload(req, res, function (err) {
+    const sizeErrReg = /File too large/
     if (err instanceof Error) {
-      return res.status(404).json({
-        message: "Invalid",
-        err: err.message
-      })
+
+      if (req.file) {
+        const filePath = path.join(__dirname, '..', 'public', 'imgs', req.file.filename);
+        fs.unlink(filePath, (unlinkErr) => {
+          if (unlinkErr) console.error('Error deleting file:', unlinkErr);
+        });
+      }
+
+      if (sizeErrReg.test(err.message)) {
+        return res.status(400).json({
+          success: false,
+          message: "File too large. Maximum 1MB."
+        })
+      }
+
+      if (err.message === "Incorrect File") {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid file type. Only JPEG, JPG, and PNG are allowed."
+        })
+      }
     }
     next()
   })

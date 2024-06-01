@@ -6,7 +6,7 @@ export interface IUser extends IUserBody {
 }
 
 export interface IUserParams {
-  uuid: string;
+  uuid: string
   email?: string
 }
 
@@ -15,7 +15,7 @@ export interface IUserQueryParams {
   findBy?: string;
   orderBy?: string;
   page?: string;
-  limit?: number
+  limit?: string
 }
 
 export interface IUserBody {

@@ -6,7 +6,6 @@ import { IErrResponse, IPromosResponse } from '../models/response';
 export const getAllPromos = async (req: Request<{}, {}, {}, IPromosQueryParams>, res: Response<IPromosResponse>) => {
   try {
     const promos = await findAll(req.query);
-    console.log(promos)
     if (promos.length < 1) {
       throw new Error('no_data');
     }
@@ -32,12 +31,12 @@ export const getAllPromos = async (req: Request<{}, {}, {}, IPromosQueryParams>,
   }
 };
 
-export const getDetailPromos = async (req: Request<IPromos>, res: Response): Promise<Response> => {
+export const getDetailPromos = async (req: Request<IPromos>, res: Response<IPromosResponse>): Promise<Response> => {
   const { id } = req.params;
   try {
     const promo = await findDetails(id);
 
-    if (!promo) {
+    if (promo.length < 1) {
       return res.status(404).json({
         success: false,
         message: 'Promo not found'
@@ -52,7 +51,7 @@ export const getDetailPromos = async (req: Request<IPromos>, res: Response): Pro
   } catch (error) {
     const err = error as IErrResponse
 
-    console.error(JSON.stringify(error));
+    console.error(err);
     return res.status(500).json({
       success: false,
       message: 'Internal Server Error'
@@ -60,9 +59,9 @@ export const getDetailPromos = async (req: Request<IPromos>, res: Response): Pro
   }
 };
 
-export const createPromos = async (req: Request, res: Response): Promise<Response> => {
+export const createPromos = async (req: Request<{}, {}, IPromosBody>, res: Response<IPromosResponse>): Promise<Response> => {
   try {
-    const promo: IPromos = await insert(req.body);
+    const promo = await insert(req.body);
     return res.json({
       success: true,
       message: 'Create promo successfully',
@@ -84,7 +83,7 @@ export const createPromos = async (req: Request, res: Response): Promise<Respons
   }
 };
 
-export const updatePromos = async (req: Request<IPromosParams, IPromosBody>, res: Response): Promise<Response> => {
+export const updatePromos = async (req: Request<IPromosParams, IPromosBody>, res: Response<IPromosResponse>): Promise<Response> => {
   try {
     const { id } = req.params;
     const data = {
@@ -92,7 +91,7 @@ export const updatePromos = async (req: Request<IPromosParams, IPromosBody>, res
     }
     const promo = await update(id, data)
 
-    if (!promo) {
+    if (promo.length < 1) {
       return res.status(404).json({
         success: false,
         message: 'Promo not found'
@@ -107,7 +106,7 @@ export const updatePromos = async (req: Request<IPromosParams, IPromosBody>, res
   } catch (error) {
     const err = error as IErrResponse
 
-    console.error(JSON.stringify(error));
+    console.error(err);
     return res.status(500).json({
       success: false,
       message: 'Internal Server Error'
@@ -115,12 +114,12 @@ export const updatePromos = async (req: Request<IPromosParams, IPromosBody>, res
   }
 };
 
-export const deletePromos = async (req: Request<IPromosParams, IPromosBody>, res: Response): Promise<Response> => {
+export const deletePromos = async (req: Request<IPromosParams, {}, IPromosBody>, res: Response<IPromosResponse>): Promise<Response> => {
   const { id } = req.params;
   try {
     const promo = await deletePromo(id);
 
-    if (!promo) {
+    if (promo.length < 1) {
       return res.status(404).json({
         success: false,
         message: 'Promo not found'
@@ -135,7 +134,7 @@ export const deletePromos = async (req: Request<IPromosParams, IPromosBody>, res
   } catch (error) {
     const err = error as IErrResponse
 
-    console.error(JSON.stringify(error));
+    console.error(err);
     return res.status(500).json({
       success: false,
       message: 'Internal Server Error'

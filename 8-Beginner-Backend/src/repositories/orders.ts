@@ -20,10 +20,10 @@ export const totalCount = async ({ searchOrder = '' }): Promise<number> => {
 export const findAll = async (
   { searchOrder = '',
     page = '1',
-    limit = 3 }
+    limit = '3' }
     : IOrdersQueryParams
 ): Promise<IOrders[]> => {
-  const offset: number = (parseInt(page) - 1) * limit
+  const offset: number = (parseInt(page) - 1) * parseInt(limit)
 
   let findOrderQuery = ''
   let values: string[] = []
@@ -98,7 +98,7 @@ export const insert = async (data: IOrdersBody): Promise<IOrders[]> => {
 
 
 
-export const update = async (uuid: string, data: IOrdersBody): Promise<IOrders[]> => {
+export const update = async (uuid: string, data: Partial<IOrdersBody>): Promise<IOrders[]> => {
   const columns: string[] = []
   const values: any[] = [uuid]
 

@@ -10,11 +10,11 @@ export const getAllOrders = async (req: Request<{}, {}, {}, IOrdersQueryParams>,
     if (orders.length < 1) {
       throw new Error('no_data')
     }
-    const limitData = req.query.limit || 3
+    const limit = req.query.limit
     const count = await totalCount(req.query);
     const currentPage = parseInt((req.query.page as string) || '1');
     const totalData = count
-    const totalPage = Math.ceil(totalData / limitData);
+    const totalPage = Math.ceil(totalData / parseInt(limit as string));
 
     return res.json({
       meta: {
@@ -44,7 +44,7 @@ export const getAllOrders = async (req: Request<{}, {}, {}, IOrdersQueryParams>,
   }
 };
 
-export const getDetailOrders = async (req: Request, res: Response<IOrderResponse>): Promise<Response> => {
+export const getDetailOrders = async (req: Request<IOrdersParams>, res: Response<IOrderResponse>) => {
   const { uuid } = req.params;
   try {
     const orders = await findDetails(uuid as string);
@@ -80,7 +80,7 @@ export const getDetailOrders = async (req: Request, res: Response<IOrderResponse
   }
 };
 
-export const createOrders = async (req: Request<{}, {}, IOrdersBody>, res: Response<IOrderResponse>): Promise<Response> => {
+export const createOrders = async (req: Request<{}, {}, IOrdersBody>, res: Response<IOrderResponse>) => {
   try {
     const orders = await insert(req.body);
     return res.json({
@@ -106,14 +106,14 @@ export const createOrders = async (req: Request<{}, {}, IOrdersBody>, res: Respo
 };
 
 
-export const updateOrders = async (req: Request<IOrdersParams, {}, IOrdersBody>, res: Response<IOrderResponse>): Promise<Response> => {
+export const updateOrders = async (req: Request<IOrdersParams, {}, IOrdersBody>, res: Response<IOrderResponse>) => {
   const { uuid } = req.params
   const data = {
     ...req.body
   }
   try {
     const orders = await update(uuid, data);
-    if (!orders) {
+    if (orders.length < 1) {
       return res.status(404).json({
         success: false,
         message: 'Order not found',
@@ -142,13 +142,13 @@ export const updateOrders = async (req: Request<IOrdersParams, {}, IOrdersBody>,
   }
 };
 
-export const deleteOrders = async (req: Request<IOrdersParams>, res: Response<IOrderResponse>): Promise<Response> => {
+export const deleteOrders = async (req: Request<IOrdersParams>, res: Response<IOrderResponse>) => {
   const { uuid } = req.params
 
   try {
     const order = await deleteOrder(uuid)
 
-    if (!order) {
+    if (order.length < 1) {
       return res.status(404).json({
         success: false,
         message: 'Product not found',

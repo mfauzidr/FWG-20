@@ -25,9 +25,9 @@ export const findAllUsers = async (
     search = '',
     orderBy = '',
     page = '1',
-    limit = 5 }: IUserQueryParams
+    limit = '5' }: IUserQueryParams
 ): Promise<IUser[]> => {
-  const offset: number = (parseInt(page) - 1) * limit;
+  const offset: number = (parseInt(page) - 1) * parseInt(limit);
 
   let orderByClause = `ORDER BY "id" ASC`;
   let whereClause: string = '';
@@ -131,15 +131,13 @@ export const update = async (uuid: string, data: Partial<IUserBody>): Promise<IU
     values.push(value)
     columns.push(`"${key}"=$${values.length}`)
   }
-
   const query = `
         UPDATE "users"
         SET ${columns.join(', ')},
         "updatedAt" = now()
         WHERE "uuid" = $1
-        RETURNING ${columns.join(', ')}
+        RETURNING *
     `
-
   const result: QueryResult<IUser> = await db.query(query, values);
   return result.rows
 }

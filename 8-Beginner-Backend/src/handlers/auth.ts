@@ -15,9 +15,6 @@ export const login = async (req: Request<{}, {}, IUserBody>, res: Response<IAuth
     if (!user) {
       throw new Error('wrong')
     }
-
-    const uuid = user.uuid
-
     const hash = user.password
     const name = user.fullName
     const isValid = await bcrypt.compare(password, hash)
@@ -28,7 +25,7 @@ export const login = async (req: Request<{}, {}, IUserBody>, res: Response<IAuth
 
     return res.json({
       success: true,
-      message: `Login Success. Welcome ${name}`,
+      message: `Login Success. Welcome ${name || email}`,
       results: [{ token }]
     });
   } catch (error) {
@@ -111,7 +108,7 @@ export const registerUser = async (req: Request<{}, {}, IUserBody>, res: Respons
       })
     }
 
-    console.log(JSON.stringify(err))
+    console.log(err)
     return res.status(500).json({
       success: false,
       message: 'Internal server error'

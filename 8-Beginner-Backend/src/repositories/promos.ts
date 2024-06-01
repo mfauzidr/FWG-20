@@ -20,7 +20,7 @@ export const findDetails = async (id: number): Promise<IPromos[]> => {
   return results.rows;
 };
 
-export const insert = async (data: IPromosBody): Promise<IPromos> => {
+export const insert = async (data: IPromosBody): Promise<IPromos[]> => {
   const columns: string[] = []
   const values: any[] = []
 
@@ -40,10 +40,10 @@ export const insert = async (data: IPromosBody): Promise<IPromos> => {
   `
 
   const result: QueryResult<IPromos> = await db.query(query, values)
-  return result.rows[0]
+  return result.rows
 };
 
-export const update = async (id: number, data: IPromosBody): Promise<IPromos> => {
+export const update = async (id: number, data: IPromosBody): Promise<IPromos[]> => {
   const columns: string[] = []
   const values: any[] = [id]
   for (const [key, value] of Object.entries(data)) {
@@ -59,17 +59,17 @@ export const update = async (id: number, data: IPromosBody): Promise<IPromos> =>
         RETURNING *
     `
 
-  const { rows } = await db.query<IPromos>(query, values)
-  return rows[0]
+  const result: QueryResult<IPromos> = await db.query(query, values)
+  return result.rows
 }
 
-export const deletePromo = async (id: number): Promise<IPromos> => {
+export const deletePromo = async (id: number): Promise<IPromos[]> => {
   const query = `
     DELETE FROM "promos"
     WHERE "id" = $1
     RETURNING *
   `;
   const values = [id];
-  const { rows }: QueryResult<IPromos> = await db.query(query, values);
-  return rows[0] || null;
+  const result: QueryResult<IPromos> = await db.query(query, values)
+  return result.rows
 };

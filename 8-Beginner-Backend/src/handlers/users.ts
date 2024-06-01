@@ -12,11 +12,11 @@ export const getAllUsers = async (req: Request<{}, {}, {}, IUserQueryParams>, re
     if (users.length < 1) {
       throw new Error('no_data');
     }
-    const limitData = req.query.limit || 5
+    const limit = req.query.limit || '5'
     const count = await totalCount(req.query);
     const currentPage = parseInt((req.query.page as string) || '1');
     const totalData = count
-    const totalPage = Math.ceil(totalData / limitData);
+    const totalPage = Math.ceil(totalData / parseInt(limit as string));
 
     return res.json({
       meta: {
@@ -47,23 +47,27 @@ export const getAllUsers = async (req: Request<{}, {}, {}, IUserQueryParams>, re
 };
 
 
-export const getDetailUser = async (req: Request, res: Response<IUserResponse>): Promise<Response> => {
+export const getDetailUser = async (req: Request<IUserParams>, res: Response<IUserResponse>): Promise<Response> => {
   const { uuid } = req.params;
   try {
     const user = await findDetails(uuid as string);
-    if (user) {
-      return res.json({
-        success: true,
-        message: 'OK',
-        results: user
-      });
+    if (user.length === 0) {
+      throw new Error("Not Found")
     }
-    return res.status(404).json({
-      success: false,
-      message: 'User not found'
+    return res.json({
+      success: true,
+      message: 'OK',
+      results: user
     });
   } catch (error) {
     const err = error as IErrResponse
+
+    if (err.message === "Not Found") {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found'
+      });
+    }
 
     if (err.code === "22P02") {
       return res.status(400).json({
@@ -72,7 +76,7 @@ export const getDetailUser = async (req: Request, res: Response<IUserResponse>):
       });
     }
 
-    console.log(JSON.stringify(err));
+    console.log(err);
     return res.status(500).json({
       success: false,
       message: 'Internal server error'
@@ -111,12 +115,6 @@ export const createUsers = async (req: Request<{}, {}, IUserBody>, res: Response
     })
   } catch (error) {
     const err = error as IErrResponse
-    if (err.code === "23502") {
-      return res.status(400).json({
-        success: false,
-        message: `${err.column} Cannot be empty`
-      })
-    }
     if (err.code === "23505") {
       const errDetails = err.detail?.match(/\((.*?)\)=\((.*?)\)/)
       const column = errDetails ? errDetails[1] : 'field'
@@ -135,14 +133,14 @@ export const createUsers = async (req: Request<{}, {}, IUserBody>, res: Response
   }
 }
 
-export const updateUsers = async (req: Request, res: Response<IUserResponse>): Promise<Response> => {
-  const { uuid } = req.params;
-  const { password } = req.body;
+export const updateUsers = async (req: Request<{ uuid: string }, {}, IUserBody>, res: Response<IUserResponse>): Promise<Response> => {
+  const {
+    file,
+    params: { uuid },
+    body: { password } } = req
 
   try {
-    const data: Partial<IUserBody> = {
-      ...req.body
-    };
+    const data: Partial<IUserBody> = { ...req.body }
 
     if (password) {
       const salt = await bcrypt.genSalt();
@@ -150,26 +148,28 @@ export const updateUsers = async (req: Request, res: Response<IUserResponse>): P
       data.password = hashed;
     }
 
-    if (req.file) {
-      const imgUrl = `/imgs/${req.file.filename}`;
+    if (file) {
+      const imgUrl = `/imgs/${file.filename}`
       data.image = imgUrl;
     }
 
     const user = await update(uuid, data);
-    console.log(user)
-    if (user) {
-      return res.json({
-        success: true,
-        message: 'Update user successfully',
-        results: user
-      });
+    if (user.length === 0) {
+      throw new Error("Not Found")
     }
-    return res.status(404).json({
-      success: false,
-      message: 'User not found',
+    return res.json({
+      success: true,
+      message: 'Update user successfully',
+      results: user
     });
   } catch (error) {
     const err = error as IErrResponse;
+    if (err.message === "Not Found") {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found',
+      })
+    }
 
     if (err.code === "22P02") {
       return res.status(400).json({
@@ -200,18 +200,18 @@ export const deleteUsers = async (req: Request<IUserParams>, res: Response<IUser
   const { uuid } = req.params
   try {
     const user = await deleteUser(uuid)
-    if (user) {
-      return res.json({
-        success: true,
-        message: 'User Deleted Successfully',
-        results: user
+    if (user.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found'
       })
     }
-
-    return res.status(404).json({
-      success: false,
-      message: 'User not found'
+    return res.json({
+      success: true,
+      message: 'User Deleted Successfully',
+      results: user
     })
+
   } catch (error) {
     const err = error as IErrResponse
 
@@ -222,7 +222,7 @@ export const deleteUsers = async (req: Request<IUserParams>, res: Response<IUser
       })
     }
 
-    console.log(JSON.stringify(err))
+    console.log(err)
     return res.status(500).json({
       success: false,
       message: 'Internal server error'

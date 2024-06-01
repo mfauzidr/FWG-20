@@ -21,7 +21,7 @@ export interface IProductsQueryParams {
   maximum?: number
   minimum?: number
   page?: string
-  limit?: number
+  limit?: string
 }
 
 export interface IProductsBody {

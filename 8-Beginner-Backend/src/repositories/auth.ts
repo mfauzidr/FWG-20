@@ -22,7 +22,7 @@ export const register = async (data: IUserBody, hashedPassword: string): Promise
         INSERT INTO "users"
         ("fullName", "email", "password", "role")
         VALUES
-        ($1, $2, $3, "customer")
+        ($1, $2, $3, 'customer')
         RETURNING "fullName", "email", "uuid", "role"
     `
 

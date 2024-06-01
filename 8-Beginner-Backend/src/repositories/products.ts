@@ -43,9 +43,9 @@ export const findAll = async (
     minimum = 0,
     maximum = Infinity,
     page = '1',
-    limit = 6 }: IProductsQueryParams
+    limit = '6' }: IProductsQueryParams
 ): Promise<IProducts[]> => {
-  const offset: number = (parseInt(page) - 1) * limit;
+  const offset: number = (parseInt(page) - 1) * parseInt(limit);
 
   let values: (string | number)[] = [];
   let conditions: string[] = [];
@@ -99,6 +99,7 @@ export const findAll = async (
       "p"."name" AS "productName",
       "c"."name" AS "category",
       "p"."description",
+      "p"."image",
       "p"."price",
       "pr"."name" AS "promo",
       "p"."discountPrice",
@@ -123,7 +124,7 @@ export const findAll = async (
 export const findDetails = async (
   uuid: string,
   selectedColumns?: string[]
-): Promise<QueryResult<IProducts>> => {
+): Promise<IProducts[]> => {
   const columns: string[] = ["id", "name", "image", "description", "price", "isRecommended", "uuid", "createdAt"]
   const selectColumns: string[] = selectedColumns || columns
 
@@ -137,8 +138,8 @@ export const findDetails = async (
   `
 
   const values: string[] = [uuid]
-  const { rows } = await db.query<QueryResult<IProducts>>(query, values)
-  return rows[0]
+  const result: QueryResult<IProducts> = await db.query(query, values)
+  return result.rows
 }
 
 export const insert = async (data: IProductsBody): Promise<IProducts[]> => {
@@ -184,7 +185,7 @@ export const update = async (uuid: string, data: Partial<IProductsBody>): Promis
   return result.rows
 }
 
-export const deleteProduct = async (uuid: string): Promise<IProducts> => {
+export const deleteProduct = async (uuid: string): Promise<IProducts[]> => {
   const query = `
         DELETE FROM "products"
         WHERE "uuid" = $1
@@ -192,6 +193,6 @@ export const deleteProduct = async (uuid: string): Promise<IProducts> => {
     `
 
   const values = [uuid]
-  const { rows } = await db.query<IProducts>(query, values)
-  return rows[0]
+  const result = await db.query<IProducts>(query, values)
+  return result.rows
 }
