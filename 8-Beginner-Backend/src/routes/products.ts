@@ -6,9 +6,9 @@ import { singleUploader } from "../middlewares/upload"
 
 const productsRouter = Router()
 
-productsRouter.get('/', authMiddleware(["admin", "customer"]), getAllProducts)
+productsRouter.get('/', getAllProducts)
 
-productsRouter.get('/:uuid', authMiddleware(["admin", "customer"]), getDetailProduct)
+productsRouter.get('/:uuid', getDetailProduct)
 
 productsRouter.post('/', authMiddleware(["admin"]), singleUploader("image"), createProduct)
 
