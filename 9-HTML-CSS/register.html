@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    @font-face {
+      font-family: Sacramento;
+      src: url(./fonts/Sacramento-Regular.ttf);
+    }
+    @font-face {
+      font-family: Plus-Jakarta-Sans;
+      src: url(./fonts/PlusJakartaSans-VariableFont_wght.ttf);
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      font-family: Plus-Jakarta-Sans;
+      min-height: 1024px;
+    }
+    .background {
+      flex: 0 0 460px;
+      background: url('./assets/img/bakcground-register.png');
+      background-position: top;
+      background-size: cover;
+    }
+    .form {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      margin: 61px 130px 142px 70px;
+      align-items: left;
+      justify-content: center;
+      text-align: left;
+    }
+    label {
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 13px;
+    }
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    .logo-container img {
+      width: 32px;
+      height: 32px;
+    }
+    .logo-container .name{
+      height: 29px;
+      top: 1.5px;
+      bottom: 1.5px;
+      left: 47px;
+      font-family: Sacramento;
+      font-size: 20px;
+      line-height: 29.19px;
+      font-weight: 400;
+      text-align: center;
+      color: #8E6447;
+    }
+    .form-section {
+      margin-bottom: 0;
+    }
+    .form-section > div {
+      margin-bottom: 25px;
+    }
+    .register-tittle{
+      margin-top: 51px;
+    }
+    .register-tittle h2{
+      font-size: 22px;
+      font-weight: 600;
+      color: #8E6447;
+    }
+    .register-tittle p {
+      margin-top: 25px;
+      font-size: 16px;
+      color: #4F5665;
+    }
+
+    form {
+      margin-top: 10px;
+      height: 52px;
+      width: 780px;
+      display: flex;
+      flex-direction: column;
+    }
+    input {
+      height: 52px;
+      padding: 13px 0 13px 40px;
+      border: 1px solid #DEDEDE;
+      border-radius: 8px;
+      outline: none;
+      background-color: #FCFDFE;
+      margin-bottom: 13px;
+    }
+    input[type="text"] {
+      
+      background-image: url('./assets/icons/profile-icon.png');
+      background-repeat: no-repeat;
+      background-position: left 9px center;
+      background-size: 24px;
+    }
+    input[type="email"] {
+      background-image: url('./assets/icons/email-icon.png');
+      background-repeat: no-repeat;
+      background-position: left 13px center;
+      background-size: 16px;
+    }
+    input[type="password"] {
+      background-image: url('./assets/icons/password-icon.png'), url('./assets/icons/show-password-icon.png');
+      background-repeat: no-repeat, no-repeat;
+      background-position: left 13px center, right 13px center;
+      background-size: 16px, 16px;
+    }
+    button {
+      width: 780px;
+      height: 50px;
+      padding: 10px;
+      border-radius: 6px;
+      background-color: #FF8906;
+      gap: 10px;
+      color: black;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .login-section {
+      margin-top: 25px;
+      margin-bottom: 25px;
+      text-align: center;
+      color: #4F5665;
+    }
+    .login-section a {
+      text-decoration: none;
+      color: #FF8906;
+    }
+    .register {
+      width: 780px;
+      height: 50px;
+      padding: 10px;
+      border-radius: 6px;
+      gap: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      font-family: Plus-Jakarta-Sans;
+    }
+    .login-options {
+      margin-top: 25px;
+      display: flex;
+      gap: 14px;
+    }
+    .login-options button {
+      width: 383px;
+      height: 64px;
+      border-radius: 14px;
+      border: none;
+      cursor: pointer;
+      background-color: white;
+      justify-content: center;
+      color: #4F5665;
+      display: flex;
+      align-items: center;
+      box-shadow: 0px 4px 10px 0px #00000014;
+      font-family: Plus Jakarta Sans;
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 23px;
+      letter-spacing: 0.005em;
+      text-align: center;
+
+    }
+    .login-options button img {
+      margin-right: 22px;
+      align-items: center;
+      width: 24px;
+      height: 24px;
+    }
+  </style>
+  <title>Register</title>
+</head>
+<body>
+  <div class="background"></div>
+
+  <div class="form">
+    <div class="logo-container">
+      <img src="./assets/img/Coffee.png" alt="Logo">
+      <div class="name">Coffee Shop</div>
+    </div>
+    
+    <div class="form-section">
+      <div class="register-tittle">
+        <h2>Register</h2>
+        <p style="height: 20px;">Fill out the form correctly</p>
+      </div>
+      <div>
+        <label for="fullname">Full Name</label>
+        <form action="">
+          <input type="text" id="fullname" name="fullname" placeholder="Enter Your Full Name">
+        </form>
+      </div>
+
+      <div>
+        <label for="email">Email</label>
+        <form action="">
+          <input type="email" id="email" name="email" placeholder="Enter Your Email">
+        </form>
+      </div>
+
+      <div>
+        <label for="password">Password</label>
+        <form action="">
+          <input type="password" id="password" name="password" placeholder="Enter Your Password">
+        </form>
+      </div>
+
+      <div>
+        <label for="confirm-password">Confirm Password</label>
+        <form action="">
+          <input type="password" id="confirm-password" name="confirm-password" placeholder="Enter Your Password Again">
+        </form>
+      </div>
+    </div>
+
+    <button class="register">Register</button>
+
+    <div class="login-section">
+      <div>Have An Account? <a href="/login.html">Login</a></div>
+    </div>
+
+    <img src="./assets/img/or.png" alt="or">
+
+    <div class="login-options">
+      <button>
+        <img src="./assets/icons/facebook-icon.png" alt="Facebook Icon">
+        Facebook
+      </button>
+      <button>
+        <img src="./assets/icons/google-icon.png" alt="Google Icon">
+        Google
+      </button>
+    </div>
+  </div>
+</body>
+</html>

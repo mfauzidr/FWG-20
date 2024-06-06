@@ -1,0 +1,1 @@
+Maaf mas sabtu minggu saya sakit, jadi kurang fokus dan jadinya belum selesai, tapi saya kejar hari ini mas.
